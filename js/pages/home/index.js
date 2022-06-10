@@ -1,12 +1,13 @@
 import Header from '../common/header/index.js'
 import Pagination from '../common/pagination/index.js'
 
-import { retrieveSensorsData } from '../../utils/api/sensorsApi.js'
+import { retrieveSensorsData } from '../../utils/api/sensorsApi/index.js'
 
 import { ITEMS_PER_PAGE } from '../../constants.js'
 
 const Home = {
     offset: 0,
+    sensors: null,
     renderSensorsCard: sensors => {
         let $sensorsWrapper = '<div class="sensors-wrapper">'
         
@@ -40,6 +41,7 @@ const Home = {
 
     render: async () => {
         const sensors = await retrieveSensorsData()
+        Home.sensors = sensors
 
         return await `
             <div class="home-page">
@@ -55,6 +57,17 @@ const Home = {
                 </div>
             </div>
         `
+    },
+
+    onChangePage: async offset => {
+        Home.offset = offset
+
+        const $sensorsWrapper = document.querySelector('.sensors-wrapper')
+        $sensorsWrapper.innerHTML = ''
+
+        document.querySelector('#root').innerHTML = await Home.render()
+        
+        Pagination.handlePagination()
     }
 }
 
