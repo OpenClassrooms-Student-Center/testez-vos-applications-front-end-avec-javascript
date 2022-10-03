@@ -43,7 +43,7 @@ const Home = {
         const sensors = await retrieveSensorsData()
         Home.sensors = sensors
 
-        return await `
+        return `
             <div class="home-page">
                 <div class="home-page-main-wrapper">
                     ${Header.render()}
