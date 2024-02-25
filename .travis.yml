@@ -4,7 +4,7 @@ node_js:
 - '14'
 branches:
   only:
-  - main
+  - test-ci
 cache:
   directories:
   - node_modules
